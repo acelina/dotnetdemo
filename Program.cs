@@ -2,8 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using DemoDotnet.Data;
 var builder = WebApplication.CreateBuilder(args);
+
+// Load the connection string from environment variables if available, otherwise from appsettings
+var connectionString = Environment.GetEnvironmentVariable("DemoDotnetContext") ?? builder.Configuration.GetConnectionString("DemoDotnetContext") ?? throw new InvalidOperationException("Connection string 'DemoDotnetContext' not found.");
+
 builder.Services.AddDbContext<DemoDotnetContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DemoDotnetContext") ?? throw new InvalidOperationException("Connection string 'DemoDotnetContext' not found.")));
+    options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
