@@ -4,7 +4,7 @@ using DemoDotnet.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Load the connection string from environment variables if available, otherwise from appsettings
-var connectionString = Environment.GetEnvironmentVariable("DemoDotnetContext") ?? builder.Configuration.GetConnectionString("DemoDotnetContext") ?? throw new InvalidOperationException("Connection string 'DemoDotnetContext' not found.");
+var connectionString = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_DemoDotnetContext") ?? builder.Configuration.GetConnectionString("DemoDotnetContext") ?? throw new InvalidOperationException("Connection string 'DemoDotnetContext' not found.");
 
 builder.Services.AddDbContext<DemoDotnetContext>(options =>
     options.UseSqlServer(connectionString));
